@@ -6,6 +6,7 @@ import hiber.model.User;
 import hiber.service.UserService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import javax.persistence.NoResultException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,28 +17,29 @@ public class MainApp {
 
       UserService userService = context.getBean(UserService.class);
 
-      User user1 = new User("Nikita", "Osia", "osai@vdsfvs.com");
-      User user2 = new User("Serg", "Markush", "granger@hogwarts.com");
-      User user3 = new User("Maria", "Lisenkova", "weasley@hogwarts.com");
-      User user4 = new User("Davo", "Sagom", "lupin@hogwarts.com");
+      User nikita = new User("Nikita", "Osia", "osai@mail.ru");
+      User petr = new User("Petr", "Petrov", "petr@mail.ru");
+      User maria = new User("Masha", "Lisenkova", "maria@mail.ru");
+      User alexandr = new User("Alexandr", "Vinov", "Alex@mail.ru");
 
-      Car car1 = new Car("Zapor", 2000);
-      Car car2 = new Car("Lada", 222);
-      Car car3 = new Car("BMV", 2345);
-      Car car4 = new Car("Mers", 1232);
+      Car zapor = new Car("Zapor", 10);
+      Car lada = new Car("Lada", 14);
+      Car bmw = new Car("BMW", 11);
+      Car toyota = new Car("Toyota", 8);
 
-      userService.add(user1.setCar(car1).setUser(user1));
-      userService.add(user2.setCar(car2).setUser(user2));
-      userService.add(user3.setCar(car3).setUser(user3));
-      userService.add(user4.setCar(car4).setUser(user4));
+      nikita.setCar(zapor);
+      petr.setCar(lada);
+      maria.setCar(bmw);
+      alexandr.setCar(toyota);
+
+      userService.add(nikita);
+      userService.add(petr);
+      userService.add(maria);
+      userService.add(alexandr);
 
       List<User> users = userService.listUsers();
       for (User user : users) {
-         System.out.println("Id = "+user.getId());
-         System.out.println("First Name = "+user.getFirstName());
-         System.out.println("Last Name = "+user.getLastName());
-         System.out.println("Email = "+user.getEmail());
-         System.out.println();
+         System.out.println(user + " "+ user.getCar());
       }
 
       context.close();
